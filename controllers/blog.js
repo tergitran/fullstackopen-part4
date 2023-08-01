@@ -13,4 +13,18 @@ router.post('/blogs', async (request, response) => {
   response.status(201).json(result);
 })
 
+router.delete('/blogs/:id', async (request, response) => {
+  const id = request.params.id;
+  await Blog.findByIdAndDelete(id);
+  response.status(204).end();
+})
+router.put('/blogs/:id', async (request, response) => {
+  const body = request.body;
+  const blog = {
+    likes: body.likes
+  };
+  const updateBlog = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true});
+  response.json(updateBlog);
+})
+
 module.exports = router;

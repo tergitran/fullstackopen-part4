@@ -10,3 +10,6 @@ Content-Type: application/json
   "url": "google.com.vn",
   "likes": 10
 }
+
+###
+DELETE http://localhost:3003/api/blogs/64c898096a0f024c8918a209
