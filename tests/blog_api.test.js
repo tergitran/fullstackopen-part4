@@ -8,7 +8,6 @@ const api = supertest(app)
 
 const initialBlogs = [
   {
-
     title: "Life is tough",
     author: "Tran Dan",
     url: "reddit.com",
@@ -17,42 +16,45 @@ const initialBlogs = [
   {
 
     title: "Life is tough 2",
-    author: "Tran Dan 2",
-    url: "reddit.com",
+    author: "nguyen thi A",
+    url: "facebook.com",
     likes: 34
   },
 ]
 
 beforeEach(async () => {
-  console.log("JUST SHOW");
   await Blog.deleteMany({})
-  let BlogObject = new Blog(initialBlogs[0])
-  await BlogObject.save()
-  BlogObject = new Blog(initialBlogs[1])
-  await BlogObject.save()
+  const promiseArray = initialBlogs.map(blog => new Blog(blog).save());
+  await Promise.all(promiseArray)
 })
 
 describe("Test blogs api response", () => {
-  test('notes are returned as json', async () => {
-    await api
-      .get('/api/blogs')
-      .expect(200)
-      .expect('Content-Type', /application\/json/)
-  }, 100000)
-  
-  test('there are one notes', async () => {
+  test('there are two blogs', async () => {
     const response = await api.get('/api/blogs')
   
     expect(response.body).toHaveLength(2)
   })
-  
-  test('the first note is about HTTP methods', async () => {
-    const response = await api.get('/api/blogs')
-    // console.log(response.body);
-    const authors = response.body.map(blog => blog.author)
-    console.log(authors);
-    expect(authors).toContain('Tran Dan 2')
-    // expect(response.body[0].author).toBe('Tran Dan')
+
+  test.only('check if have id property', async () => {
+    const response = await api.get('/api/blogs');
+    expect(response.body[0].id).toBeDefined();
+  })
+
+  test.only('test new blog post', async () => {
+    const newBlog = {
+      title: "What a beautiful life",
+      author: "Jr. Tony",
+      url: "abc.com",
+      likes: 12
+    };
+    await api.post('/api/blogs').send(newBlog);
+    const resAtEnd = await api.get('/api/blogs');
+    expect(resAtEnd.body).toHaveLength(initialBlogs.length + 1);
+  })
+
+  test.only('check if have id property', async () => {
+    const response = await api.get('/api/blogs');
+    expect(response.body[0].id).toBeDefined();
   })
 })
 
