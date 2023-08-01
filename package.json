@@ -4,14 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "cross-env NODE_ENV=production node index.js",
+    "dev": "cross-env NODE_ENV=development nodemon index.js",
+    "test": "cross-env NODE_ENV=test npx jest --verbose --runInBand"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.1.4",
     "express": "^4.18.2",
     "mongoose": "^7.2.4"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "globalTeardown": "./tests/teardown.js"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.2",
+    "cross-env": "^7.0.3",
+    "supertest": "^6.3.3"
   }
 }
