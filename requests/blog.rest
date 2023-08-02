@@ -12,4 +12,17 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3003/api/blogs/64c898096a0f024c8918a209
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbnNpcm8iLCJpZCI6IjY0YzljOWFkMzAxNWVhMGRmOTVmZmIyOCIsImlhdCI6MTY5MDk2NDIxNX0.P4jlKGC2F3ppJiFFK_ysMKwKMS3KqZDqT5aixJs97v8
+
+{
+  "title": "Programming life",
+  "author": "it man",
+  "url": "dotnet.vn",
+  "likes": 9
+}
+
+###
+DELETE http://localhost:3003/api/blogs/64c9eb195eb5ca854590b9c0
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRhbnNpcm8iLCJpZCI6IjY0YzljOWFkMzAxNWVhMGRmOTVmZmIyOCIsImlhdCI6MTY5MDk2NDIxNX0.P4jlKGC2F3ppJiFFK_ysMKwKMS3KqZDqT5aixJs97v8

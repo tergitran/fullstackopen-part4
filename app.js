@@ -3,7 +3,10 @@ const app = express()
 const cors = require('cors')
 const config = require("./utils/config");
 const blogRouter = require("./controllers/blog");
+const usersRouter = require("./controllers/user");
+const authenRouter = require("./controllers/authen");
 const morgan = require("morgan");
+const middleware = require('./utils/middleware')
 
 const mongoose = require('mongoose');
 mongoose.connect(config.MONGODB_URI).then(() => {
@@ -21,6 +24,11 @@ app.use(
   )
 )
 
-app.use('/api', blogRouter);
+app.use(middleware.tokenExtractor);
+app.use('/api/blogs', blogRouter);
+app.use('/api/users', usersRouter);
+app.use('/api', authenRouter);
+app.use(middleware.unknownEndpoint)
+app.use(middleware.errorHandler)
 
 module.exports = app;
