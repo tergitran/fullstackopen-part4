@@ -40,6 +40,9 @@ router.delete('/:id', async (request, response, next) => {
   try {
     const id = request.params.id;
     const blog = await Blog.findById(id);
+    // to remove form DB : blog.remove()
+    // rember to remove blog from user
+    // user.blogs = user.blogs.filter(b => b.toString() !== blog.id.toString() )
   
     const decodedToken = jwt.verify(request.token, process.env.SECRET);
     if (blog.user.toString() === decodedToken.id) {
